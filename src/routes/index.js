@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ChartPage from "../pages/chart"
 import { Link } from "react-router-dom";
 
-export default () => {
+const IndexRoutes = () => {
     return (
         <Router>
             <div className="layout-container">
@@ -10,9 +10,7 @@ export default () => {
                     <div className="navbar-container">
                         <Link to='/' >Chart Component</Link>
                         <div className="navbar-links">
-                            <Link to='/chart' >Line chart 1</Link>
-                            <Link to='/chart' >Line chart 2</Link>
-                            <Link to='/chart' >Line chart 3</Link>
+                            <Link to='/chart' >Line chart</Link>
                         </div>
                     </div>
                 </div>
@@ -22,9 +20,11 @@ export default () => {
                     </Routes>
                 </div>
                 <div className="footer">
-                    <p>Followed Shopify Polaris Styling Guidline</p>
+                    <p>Followed Shopify Polaris Styling Guideline</p>
                 </div>
             </div>
         </Router>
     );
 }
+
+export default IndexRoutes;

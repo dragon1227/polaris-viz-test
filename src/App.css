@@ -1,6 +1,6 @@
-.App {
-  text-align: center;
-}
+/* .App { */
+  /* text-align: center; */
+/* } */
 
 .App-logo {
   height: 40vmin;
@@ -93,9 +93,6 @@ a {
 
 .chart-container {
   height: 400px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .footer {
@@ -105,4 +102,20 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.filter-control {
+  margin: 0 10px;
+  background: #282c34;
+  border: 1px solid #ffffff2a;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
 }

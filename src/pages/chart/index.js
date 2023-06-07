@@ -1,11 +1,16 @@
 import {PolarisVizProvider} from '@shopify/polaris-viz';
 import '@shopify/polaris-viz/build/esm/styles.css';
 import ChartRoutes from '../../routes/chart';
+import { ChartProvider } from '../../context/ChartProvider';
 
-export default () => {
+const ChartPage = () => {
     return (
-        <PolarisVizProvider>
-            <ChartRoutes />
-        </PolarisVizProvider>
+        <ChartProvider>
+            <PolarisVizProvider>
+                <ChartRoutes />
+            </PolarisVizProvider>
+        </ChartProvider>
     );
 }
+
+export default ChartPage
