@@ -1,10 +1,13 @@
 import { Route, Routes } from "react-router-dom";
-import ShowChartPage from "../../pages/chart/show"
+import OrderPage from "../../pages/chart/order"
+import SalesPage from "../../pages/chart/sale"
 
 const ChartRoutes = () => {
     return (
         <Routes>
-            <Route exact path="/" Component={ShowChartPage} />
+            <Route exact path="/" Component={OrderPage} />
+            <Route exact path="/order" Component={OrderPage} />
+            <Route exact path="/sale" Component={SalesPage} />
         </Routes>
     );
 }

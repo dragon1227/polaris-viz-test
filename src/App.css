@@ -86,6 +86,7 @@ a {
 }
 
 .page-container {
+  padding: 0 20px;
   width: 100%;
   min-height: 400px;
   flex: 1;
@@ -111,11 +112,22 @@ a {
   margin: 20px 0;
 }
 
-.filter-control {
+.filter-control,
+.reload-button {
   margin: 0 10px;
   background: #282c34;
   border: 1px solid #ffffff2a;
+  transition: all 0.3s ease-in-out;
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.reload-button:hover {
+  background: #ffffff2a;
+}
+
+.text-center {
+  text-align: center;
 }
