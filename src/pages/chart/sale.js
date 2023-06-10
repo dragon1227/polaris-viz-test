@@ -51,7 +51,7 @@ const ShowPage = () => {
         return new Intl.NumberFormat("en",{style:"currency",currency:displayOptions?.unit?.toUpperCase() || "usd",currencyDisplay:"symbol"}).format(value)
     },[displayOptions])
 
-    useEffect(() => {
+    const refresh = useCallback(() => {
         setStatus("Loading")
         setTimeout(() => {
             let orders = getOrders({
@@ -66,6 +66,10 @@ const ShowPage = () => {
             setChartData(orders?.data)
             setStatus("Success")
         },1000)
+    }, [displayOptions])
+
+    useEffect(() => {
+        refresh ()
     }, [displayOptions])
 
     return (
@@ -93,6 +97,9 @@ const ShowPage = () => {
                     <option value="Loading">Loading</option>
                     <option value="Error">Error</option>
                 </select>
+                <button className="reload-button" onClick={refresh} disabled={status=="Loading"}>
+                    Refresh
+                </button>
             </div>
             <h6 className='text-center'>{status=="Success"?title:'...'}</h6>
             <div className="chart-container">
