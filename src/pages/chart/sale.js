@@ -7,6 +7,8 @@ import moment from 'moment'
 import { useChart } from "../../context/ChartProvider";
 import { useCallback, useEffect } from "react";
 
+import { getOrders } from "../../model/order";
+
 const ShowPage = () => {
 
     const {
@@ -25,11 +27,7 @@ const ShowPage = () => {
     } = useChart()
 
     useEffect(() => {
-        setStatus("Loading")
-        setTimeout(() => {
-            setChartData (mockupData2)
-            setStatus("Success")
-        }, 2000)
+        
     },[])
 
     const onFieldChange = (e) => {
@@ -46,52 +44,57 @@ const ShowPage = () => {
     }
 
     const formatXAxisLabel = useCallback((value) => {
-        if (displayOptions?.unit === "day") {
-            let date = new Date(value)
-            return moment(date).format("DD MMM")
-        } else if (displayOptions?.unit === "week") {
-            return value?.substring(0, 7) || ''
-        } else if (displayOptions?.unit === "month") {
-            return value
-        } else {
-            return value
-        }
+        return value;
+    },[displayOptions])
+
+    const formatYAxisLabel = useCallback((value) => {
+        return new Intl.NumberFormat("en",{style:"currency",currency:displayOptions?.unit?.toUpperCase() || "usd",currencyDisplay:"symbol"}).format(value)
     },[displayOptions])
 
     useEffect(() => {
         setStatus("Loading")
         setTimeout(() => {
-            switch (displayOptions?.unit) {
-                case "day":
-                    setChartData(mockupData)
-                    break;
-                case "week":
-                    setChartData(mockupData1)
-                    break;
-                case "month":
-                    setChartData(mockupData2)
-                    break;
-                default:
-                    break;
-            }
+            let orders = getOrders({
+                unit: displayOptions?.unit,
+                from: displayOptions?.from,
+                to: displayOptions?.to,
+                period: displayOptions?.period,
+                size: displayOptions?.size,
+            })
+            // console.log (orders)
+            setTitle (orders?.url)
+            setChartData(orders?.data)
             setStatus("Success")
         },1000)
     }, [displayOptions])
 
     return (
         <>
+            <h1 className='text-center'>Sales over dates</h1>
             <div className="filter-container">
-                <select className="form-control filter-control filter-select filter-unit" name="unit" value={displayOptions?.unit || "month"} onChange={onFieldChange}>
+                <input className="form-control filter-control filter-select filter-unit" name="from" type="date" value={displayOptions?.from || ""} onChange={onFieldChange} />
+                ~
+                <input className="form-control filter-control filter-select filter-unit" name="to" type="date" value={displayOptions?.to || ""} onChange={onFieldChange} />
+                By
+                <select className="form-control filter-control filter-select filter-unit" name="period" value={displayOptions?.period || "week"} onChange={onFieldChange}>
                     <option value="day">Day</option>
                     <option value="week">Week</option>
                     <option value="month">Month</option>
                 </select>
+                Currency:
+                <select className="form-control filter-control filter-select filter-unit" name="unit" value={displayOptions?.unit || "usd"} onChange={onFieldChange}>
+                    <option value="usd">USD</option>
+                    <option value="cad">CAD</option>
+                    <option value="aud">AUD</option>
+                </select>
+                Status:
                 <select className="form-control filter-control filter-select filter-unit" name="status" value={status || "Success"} onChange={onStatusChange}>
                     <option value="Success">Success</option>
                     <option value="Loading">Loading</option>
                     <option value="Error">Error</option>
                 </select>
             </div>
+            <h6 className='text-center'>{status=="Success"?title:'...'}</h6>
             <div className="chart-container">
                 <LineChart
                     // annotations={annotationData}
@@ -106,27 +109,9 @@ const ShowPage = () => {
                     // theme="default"
                     xAxisOptions={{
                         labelFormatter: formatXAxisLabel,
-                        // axisTitle: "X Axis",
-                        // axisTitleHidden: false,
-                        // axisTitleShift: 0,
-                        // axisTitleVerticalShift: 0,
-                        // axisTitleWrapLabel: false,
-                        // axisTitleWrapLabelOffset: 0,
-                        // axisTitleWrapLabelPadding: 0,
-                        // axisTitleWrapLabelShift: 0,
-                        // axisTitleWrapLabelWrapText: false,
-                        // axisTitleWrapLabelWrapTextLimit: 0,
-                        // axisTitleWrapLabelWrapTextOverflow: false,
-                        // axisTitleWrapLabelWrapTextShift: 0, 
-                        // labelFormatter: function formatXAxisLabel(value){
-                        //     return new Intl.NumberFormat("en",{style:"currency",currency:"CAD",currencyDisplay:"symbol"}).format(value)
-                        // },
-                        // hide: true,
                     }}
                     yAxisOptions={{
-                        // labelFormatter: function formatYAxisLabel(value){
-                        //     return new Intl.NumberFormat("en",{style:"currency",currency:"CAD",currencyDisplay:"symbol"}).format(value)
-                        // },
+                        labelFormatter: formatYAxisLabel,
                     }}
                     style={{
                         height: '1000px'

@@ -8,15 +8,16 @@ const IndexRoutes = () => {
             <div className="layout-container">
                 <div className="nav">
                     <div className="navbar-container">
-                        <Link to='/' >Chart Component</Link>
+                        <Link to='/' >Polaris viz Chart</Link>
                         <div className="navbar-links">
-                            <Link to='/chart' >Line chart</Link>
+                            <Link to='/chart/order' >Orders Statistics</Link>
+                            <Link to='/chart/sale' >Sales Statistics</Link>
                         </div>
                     </div>
                 </div>
                 <div className="page-container">
                     <Routes>
-                        <Route exact path="/chart" Component={ChartPage} />
+                        <Route exact path="/chart/*" Component={ChartPage} />
                     </Routes>
                 </div>
                 <div className="footer">
