@@ -10,8 +10,8 @@ const IndexRoutes = () => {
                     <div className="navbar-container">
                         <Link to='/' >Polaris viz Chart</Link>
                         <div className="navbar-links">
-                            <Link to='/chart/order' >Orders Statistics</Link>
-                            <Link to='/chart/sale' >Sales Statistics</Link>
+                            <Link to='/chart/order' >Orders</Link>
+                            <Link to='/chart/sale' >Sales</Link>
                         </div>
                     </div>
                 </div>
